@@ -14,8 +14,13 @@ class Node:
 #Puts all data on correct braches.
 
 def Setup():
+    #This is not the best way to setup, but for now it is good enough.
+    #Different countries and languages have different morse symbols,
+    #so the way of adding data should be easy.
+    
     #Root
     Root = Node(None)
+
     #1. layer
     Root.left = Node("e")
     Root.right = Node("t")
@@ -30,6 +35,7 @@ def Setup():
     Root.left.left.left = Node("s")
     Root.left.left.right = Node("u")
     Root.left.right.left = Node("r")
+
     Root.left.right.right = Node("w")
     Root.right.left.left = Node("d")
     Root.right.left.right = Node("k")
@@ -38,9 +44,10 @@ def Setup():
     #4. layer
     Root.left.left.left.left = Node("h")
     Root.left.left.left.right = Node("v")
+    Root.left.left.right.Root = Node(None)
+
     Root.left.left.right.left = Node("f")
     Root.left.left.right.right = Node("ö")
-    
     Root.left.right.left.left = Node("l")
     Root.left.right.left.right = Node("ä")
     Root.left.right.right.left = Node("p")
@@ -84,7 +91,9 @@ def Setup():
     Root.left.right.left.right.left.right = Node(".")
     Root.right.left.left.left.left.right = Node("-")
     Root.right.left.right.right.left.right = Node(")")
+    
     return Root
+
 Root = Setup()
 
 ## ----- Print Tree ----- ##
@@ -122,9 +131,14 @@ def ConvertMorse(t,bt): #t = text, bt = binary tree
             if k == len(t[i]) - 1: #Last symbol, so add it to text
                 text += curLeaf.value
     return text
-#My name
-print(ConvertMorse("-- -.-- | -. .- -- . ---... | .- .- .-. -. .. | .--- ..- -. -.- -.- .- .-.. .-",Root))
-#My alphabet
-print(ConvertMorse("..-. .. -. -. .. ... .... | .- .-.. .--. .... .- -... . - ---... | .- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --.. .--.- .-.- ..--",Root))
-#Numbers and specialcharacters
-print(ConvertMorse("-. ..- -- -... . .-. ... | .- -. -.. | ... .--. . -.-. .. .- .-.. | -.-. .... .- .-. .- -.-. - . .-. ... ---... | .---- ..--- ...-- ....- ..... -.... --... ---.. ----. ----- .-.-. -....- -...- -..-. ..--. ..--.. ---... --..-- .-.-.- -....- -.--. -.--.-",Root))
+
+if __name__ == "__main__": #Testing in the main file
+    #My name
+    print(ConvertMorse("-- -.-- | -. .- -- . ---... | .- .- .-. -. .. | .--- ..- -. -.- -.- .- .-.. .-",Root))
+    #My alphabet
+    print(ConvertMorse("..-. .. -. -. .. ... .... | .- .-.. .--. .... .- -... . - ---... | .- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --.. .--.- .-.- ..--",Root))
+    #Numbers and specialcharacters
+    print(ConvertMorse("-. ..- -- -... . .-. ... | .- -. -.. | ... .--. . -.-. .. .- .-.. | -.-. .... .- .-. .- -.-. - . .-. ... ---... | .---- ..--- ...-- ....- ..... -.... --... ---.. ----. ----- .-.-. -....- -...- -..-. ..--. ..--.. ---... --..-- .-.-.- -....- -.--. -.--.-",Root))
+    #Type yourself
+    writing = input("Type morse and see what you wrote. Use dots and dashes. Space to divide letters and | to create spaces between words: ")
+    print(ConvertMorse(writing,Root))
