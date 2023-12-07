@@ -14,84 +14,34 @@ class Node:
 #Puts all data on correct braches.
 
 def Setup():
-    #This is not the best way to setup, but for now it is good enough.
-    #Different countries and languages have different morse symbols,
-    #so the way of adding data should be easy.
-    
-    #Root
+    #Currently the list should be in order by the number
+    kirjaimet = ["e1","t2","i3","a4","n5","m6","s7","u8","r9","w10","d11","k12","g13","o14","h15","v16","f17","ö18","l19","ä20","p21","j22","b23","x24","c25","y26","z27","q28","531","432","334","!37","238","+41","å44","146","647","=48","/49","(53","755","859","961","062","?75",".84","-96",")108",",114",":119"]
     Root = Node(None)
-
-    #1. layer
-    Root.left = Node("e")
-    Root.right = Node("t")
-    
-    #2. layer
-    Root.left.left = Node("i")
-    Root.left.right = Node("a")
-
-    Root.right.left = Node("n")
-    Root.right.right = Node("m")
-    #3. layer
-    Root.left.left.left = Node("s")
-    Root.left.left.right = Node("u")
-    Root.left.right.left = Node("r")
-
-    Root.left.right.right = Node("w")
-    Root.right.left.left = Node("d")
-    Root.right.left.right = Node("k")
-    Root.right.right.left = Node("g")
-    Root.right.right.right = Node("o")
-    #4. layer
-    Root.left.left.left.left = Node("h")
-    Root.left.left.left.right = Node("v")
-    Root.left.left.right.Root = Node(None)
-
-    Root.left.left.right.left = Node("f")
-    Root.left.left.right.right = Node("ö")
-    Root.left.right.left.left = Node("l")
-    Root.left.right.left.right = Node("ä")
-    Root.left.right.right.left = Node("p")
-    Root.left.right.right.right = Node("j")
-
-    Root.right.left.left.left = Node("b")
-    Root.right.left.left.right = Node("x")
-    Root.right.left.right.left = Node("c")
-    Root.right.left.right.right = Node("y")
-
-    Root.right.right.left.left = Node("z")
-    Root.right.right.left.right = Node("q")
-    Root.right.right.right.left = Node(None)
-    Root.right.right.right.right = Node(None)
-    #5. layer
-    Root.left.left.left.left.left = Node("5")
-    Root.left.left.left.left.right = Node("4")
-    Root.left.left.left.right.right = Node("3")
-    Root.left.left.right.right.right = Node("2")
-    Root.left.left.right.right.left = Node("!")
-    
-    Root.left.right.left.right.left = Node("+")
-    Root.left.right.right.right.right = Node("1")
-    Root.left.right.right.left.right = Node("å")
-
-    Root.right.left.left.left.left = Node("6")
-    Root.right.left.left.left.right = Node("=")
-    Root.right.left.right.right.left = Node("(")
-    Root.right.left.left.right.left = Node("/")
-
-    Root.right.right.left.left.left = Node("7")
-    Root.right.right.left.left.right = Node(None)
-    Root.right.right.right.left.left = Node("8")
-    Root.right.right.right.right.left = Node("9")
-    Root.right.right.right.right.right = Node("0")
-    
-    #6. Layer
-    Root.left.left.right.right.left.left = Node("?")
-    Root.right.right.right.left.left.left = Node(":")
-    Root.right.right.left.left.right.right = Node(",")
-    Root.left.right.left.right.left.right = Node(".")
-    Root.right.left.left.left.left.right = Node("-")
-    Root.right.left.right.right.left.right = Node(")")
-    
+    for i in kirjaimet:
+        v = i[0]
+        pos = int(i[1:])
+        route = []
+        while pos > 0:
+            if pos % 2 == 0: #Oikealle
+                pos = (pos - 2) / 2
+                route.insert(0,1)
+            else: #Vasemalle
+                pos = (pos - 1) / 2
+                route.insert(0,0)
+        curPos = Root
+        for k in range(len(route) - 1):
+            if route[k] == 0:
+                if curPos.left == None: #Adds an empty node, if there is not one
+                    curPos.left = Node(None)
+                curPos = curPos.left
+            if route[k] == 1:
+                if curPos.right == None: #Adds an empty node, if there is not one
+                    curPos.right = Node(None)
+                curPos = curPos.right
+        if route[-1] == 0:
+            curPos.left = Node(i[0])
+        if route[-1] == 1:
+            curPos.right = Node(i[0])
     return Root
 
 Root = Setup()
